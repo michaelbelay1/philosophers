@@ -6,15 +6,15 @@
 #    By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/08 21:09:49 by mhaile            #+#    #+#              #
-#    Updated: 2024/02/08 23:18:56 by mhaile           ###   ########.fr        #
+#    Updated: 2024/02/09 20:33:48 by mhaile           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 			philo
 
 FILES	= 		main.c src/utils/ft_putstr_fd.c src/utils/ft_atoi_l.c src/utils/ft_bzero.c src/utils/ft_isdigit.c \
-				src/philo_utils/init_philos.c
-				
+				src/philo_utils/init_philos.c src/utils/parsing.c src/philo_utils/philo_routine.c\
+				src/philo_utils/philo_actions.c \
 # Colors:
 GREEN		=	\e[92;5;118m
 GRAY		=	\e[33;2;37m
@@ -53,7 +53,7 @@ clean:
 fclean: 		clean
 				@${RM} ${NAME}
 				@printf "$(CURSIVE)$(GRAY)	- Removing $(NAME)... $(RESET)\n"
-				@printf "$(RED)    - Executable & Archives removed.$(RESET)\n"
+				@printf "$(RED)    - Executable removed.$(RESET)\n"
 
 re: 			fclean all
 				@printf "$(CURSIVE)$(GRAY)	- Remaking $(NAME)... $(RESET)\n"
