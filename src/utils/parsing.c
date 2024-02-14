@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:26:31 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/09 22:33:54 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/14 22:19:06 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	is_str_numeric(char *str)
 	int	i;
 
 	i = -1;
+	if (str[0] == '\0')
+		return (0);
 	if (str[0] == '-' || str[0] == '+')
 		i++;
 	while (str[++i])

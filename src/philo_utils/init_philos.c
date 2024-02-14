@@ -6,13 +6,13 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 23:15:10 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/09 21:01:53 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/14 22:28:19 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philosophers.h"
 
-int	get_time(void)
+unsigned long int	get_time(void)
 {
 	static struct timeval	t;
 
@@ -20,14 +20,13 @@ int	get_time(void)
 	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }
 
-void	ft_sleep(int time, t_philo *philo)
+void	ft_sleep(unsigned long int time, t_philo *philo)
 {
-	int	start;
+	unsigned long int	start;
 
 	start = get_time();
-	while ((get_time() - start) < time
-		&& philo_is_dead(philo) == 1)
-		usleep(50);
+	while ((get_time() - start) < time)
+		usleep(philo->time_to_sleep);
 }
 
 int	init_philos(t_data *data)
@@ -41,8 +40,9 @@ int	init_philos(t_data *data)
 	while (++i < data->num_of_philo)
 	{
 		data->philo[i].id = i + 1;
-		// data->philo[i].left_fork = NULL;
-		// data->philo[i].right_fork = NULL;
+		data->philo[i].left_fork = &data->forks[i];
+		data->philo[i].right_fork = &data->forks[(i + 1)
+			% data->num_of_philo];
 		data->philo[i].last_eat = 0;
 		data->philo[i].time_to_die = data->time_to_die;
 		data->philo[i].time_to_eat = data->time_to_eat;
@@ -51,6 +51,7 @@ int	init_philos(t_data *data)
 		data->philo[i].is_eating = 0;
 		data->philo[i].num_of_meals = 0;
 		data->philo[i].thread_id = 0;
+		data->philo[i].num_of_philo = data->num_of_philo;
 	}
 	return (0);
 }
@@ -93,7 +94,7 @@ int	init_struct(t_data *data, char **av)
 		data->must_eat_count = -1;
 	data->philo_dead = 0;
 	data->start_time = 0;
-	if (init_philos(data) || mutex(data))
+	if (mutex(data) || init_philos(data))
 		return (1);
 	return (0);
 }

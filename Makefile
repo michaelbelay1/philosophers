@@ -6,15 +6,15 @@
 #    By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/08 21:09:49 by mhaile            #+#    #+#              #
-#    Updated: 2024/02/09 20:33:48 by mhaile           ###   ########.fr        #
+#    Updated: 2024/02/14 22:45:03 by mhaile           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 			philo
 
-FILES	= 		main.c src/utils/ft_putstr_fd.c src/utils/ft_atoi_l.c src/utils/ft_bzero.c src/utils/ft_isdigit.c \
+FILES	= 		main.c src/utils/ft_putstr_fd.c src/utils/ft_atoi_l.c src/utils/ft_isdigit.c \
 				src/philo_utils/init_philos.c src/utils/parsing.c src/philo_utils/philo_routine.c\
-				src/philo_utils/philo_actions.c \
+				src/philo_utils/philo_actions.c src/philo_utils/philo_monitoring.c \
 # Colors:
 GREEN		=	\e[92;5;118m
 GRAY		=	\e[33;2;37m
