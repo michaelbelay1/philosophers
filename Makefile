@@ -6,7 +6,7 @@
 #    By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/08 21:09:49 by mhaile            #+#    #+#              #
-#    Updated: 2024/02/14 22:45:03 by mhaile           ###   ########.fr        #
+#    Updated: 2024/02/14 22:49:43 by mhaile           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,5 +59,10 @@ re: 			fclean all
 				@printf "$(CURSIVE)$(GRAY)	- Remaking $(NAME)... $(RESET)\n"
 				
 rebonus: 		fclean bonus
+
+push: 			fclean
+				git add .
+				git commit -m "Updated on $(shell date +'%Y-%m-%d %H:%M:%S') by $(USER)"
+				git push -u origin master
 
 .PHONY: 		all clean fclean re
