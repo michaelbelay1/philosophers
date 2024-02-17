@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 23:15:10 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/14 22:28:19 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/17 22:30:52 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,17 @@ int	init_philos(t_data *data)
 	{
 		data->philo[i].id = i + 1;
 		data->philo[i].left_fork = &data->forks[i];
-		data->philo[i].right_fork = &data->forks[(i + 1)
-			% data->num_of_philo];
+		if (data->philo[i].id == data->num_of_philo)
+			data->philo[i].right_fork = &data->forks[0];
+		else
+			data->philo[i].right_fork = &data->forks[i + 1];
 		data->philo[i].last_eat = 0;
 		data->philo[i].time_to_die = data->time_to_die;
 		data->philo[i].time_to_eat = data->time_to_eat;
 		data->philo[i].time_to_sleep = data->time_to_sleep;
 		data->philo[i].data = data;
 		data->philo[i].is_eating = 0;
-		data->philo[i].num_of_meals = 0;
+		// data->philo[i].num_of_meals = 0;
 		data->philo[i].thread_id = 0;
 		data->philo[i].num_of_philo = data->num_of_philo;
 	}
@@ -94,6 +96,7 @@ int	init_struct(t_data *data, char **av)
 		data->must_eat_count = -1;
 	data->philo_dead = 0;
 	data->start_time = 0;
+	data->num_of_meals = 0;
 	if (mutex(data) || init_philos(data))
 		return (1);
 	return (0);

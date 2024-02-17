@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 22:35:14 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/14 22:40:02 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/17 19:59:55 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	check_last_meal(t_philo *philo)
 	if (get_time() - philo->data->start_time >= philo->time_to_die)
 	{
 		philo->data->philo_dead = 1;
-		printf("%lu %d died\n", get_time()
-			- philo->data->start_time, philo->id);
+		// printf("%lu %d died\n", get_time()
+		// 	- philo->data->start_time, philo->id);
 		return (0);
 	}
 	else
@@ -61,10 +61,10 @@ void	*begin_monitoring(void *arg)
 		pthread_mutex_lock(&data->mutex);
 		if (check_if_one_is_dead(data) == 1)
 		{
-			usleep(100);
+			// usleep(100);
 			return (pthread_mutex_unlock(&data->mutex), NULL);
 		}
 		pthread_mutex_unlock(&data->mutex);
-		usleep(200);
+		// usleep(200);
 	}
 }

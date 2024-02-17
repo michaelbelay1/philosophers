@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 21:07:40 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/14 22:45:38 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/17 22:30:44 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_philo
 	unsigned long int		time_to_eat;
 	unsigned long int		time_to_sleep;
 	int						is_eating;
-	int						num_of_meals;
+	// int						num_of_meals;
 	pthread_mutex_t			mutex_test;
 	pthread_t				thread_id;
 	struct s_data			*data;
@@ -44,6 +44,7 @@ typedef struct s_data
 	unsigned long int		time_to_eat;
 	unsigned long int		time_to_sleep;
 	int						must_eat_count;
+	int						num_of_meals;
 	int						philo_dead;
 	unsigned long int		start_time;
 	pthread_mutex_t			*left_fork;

@@ -6,11 +6,18 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 14:34:27 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/14 22:43:05 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/17 23:03:59 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philosophers.h"
+
+int	make_philo_think(t_philo *philo)
+{
+	print_message("is thinking", philo);
+	usleep(100);
+	return (1);
+}
 
 void	one_philo_case(t_philo *philo)
 {
@@ -32,7 +39,16 @@ void	print_message(char *str, t_philo *philo)
 		pthread_mutex_unlock(&philo->data->mutex);
 	}
 }
-
+void	is_max_eat(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->mutex_test);
+	if (philo->data->num_of_meals != -1
+		&& philo->data->num_of_meals == philo->data->num_of_philo * philo->data->must_eat_count)
+	{
+		philo->data->philo_dead = 1;
+	}
+	pthread_mutex_unlock(&philo->mutex_test);
+}
 void	*philo_routine(void *arguments)
 {
 	t_philo	*philo;
@@ -40,24 +56,33 @@ void	*philo_routine(void *arguments)
 	philo = (t_philo *)arguments;
 	if (philo->num_of_philo == 1)
 		one_philo_case(philo);
-	while (philo->data->philo_dead == 0)
+	else
 	{
-		if (philo_is_dead(philo))
-			return (0);
-		philo_takes_forks(philo);
-		if (philo_is_dead(philo))
+		if (philo->id % 2 == 0)
+			make_philo_think(philo);
+		while (1)
 		{
-			pthread_mutex_unlock(philo->left_fork);
-			pthread_mutex_unlock(philo->right_fork);
-			return (0);
+
+			if (philo_is_dead(philo))
+				return (NULL);
+			philo_takes_forks(philo);
+			if (philo_is_dead(philo))
+				return (NULL);
+			philo_is_eating(philo);
+			is_max_eat(philo);
+			// if (philo->data->num_of_meals != -1
+			// 	&& philo->data->num_of_meals == philo->data->num_of_philo * philo->data->must_eat_count)
+			// {
+			// 	philo->data->philo_dead = 1;
+			// 	// return (NULL);
+			// }
+			if (philo_is_dead(philo))
+				return (NULL);
+			philo_is_sleeping(philo);
+			if (philo_is_dead(philo))
+				return (NULL);
+			philo_is_thinking(philo);
 		}
-		philo_is_eating(philo);
-		if (philo_is_dead(philo))
-			return (0);
-		philo_is_sleeping(philo);
-		if (philo_is_dead(philo))
-			return (0);
-		philo_is_thinking(philo);
 	}
 	return (0);
 }
