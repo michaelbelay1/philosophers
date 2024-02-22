@@ -6,7 +6,7 @@
 #    By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/08 21:09:49 by mhaile            #+#    #+#              #
-#    Updated: 2024/02/14 22:49:43 by mhaile           ###   ########.fr        #
+#    Updated: 2024/02/18 19:19:38 by mhaile           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ SRCS =			$(FILES)
 OBJS =			$(SRCS:.c=.o)
 
 
-CC = 			cc
+CC = 			cc 
 
 CFLAGS =		-Wall -Wextra -Werror -g3
 RM =			rm -rf
@@ -42,7 +42,7 @@ all: 			$(NAME)
 
 $(NAME):  		$(OBJS)
 				@printf "$(CURSIVE)$(GRAY) 	- Compiling $(NAME)... $(RESET)\n"
-		 		$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+		 		$(CC) $(CFLAGS) -pthread $^ -o $(NAME)
 				@printf "$(GREEN)    - Philosophers (./philo) Executable ready.\n$(RESET)"
 
 clean:

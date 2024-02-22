@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 21:07:40 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/17 22:30:44 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/22 16:16:10 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ typedef struct s_philo
 	unsigned long int		time_to_eat;
 	unsigned long int		time_to_sleep;
 	int						is_eating;
+	int						*forks_taken_left;
+	int						*forks_taken_right;
 	// int						num_of_meals;
-	pthread_mutex_t			mutex_test;
 	pthread_t				thread_id;
 	struct s_data			*data;
 }				t_philo;
@@ -47,10 +48,17 @@ typedef struct s_data
 	int						num_of_meals;
 	int						philo_dead;
 	unsigned long int		start_time;
-	pthread_mutex_t			*left_fork;
-	pthread_mutex_t			*right_fork;
+	int						*forks_taken;
+	pthread_mutex_t			mutex_eat;
+	// pthread_mutex_t			mutex_print;
+	pthread_mutex_t			mutex_dead;
+	pthread_mutex_t			mutex_meals;
+	// pthread_mutex_t			*left_fork;
+	// pthread_mutex_t			*right_fork;
 	pthread_mutex_t			*forks;
 	pthread_mutex_t			mutex;
+	pthread_mutex_t			mutex_test;
+	// pthread_mutex_t			mutex_sleep;
 	t_philo					*philo;
 }				t_data;
 
