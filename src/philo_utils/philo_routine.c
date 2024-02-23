@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 14:34:27 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/22 21:35:00 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/23 16:00:45 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,16 @@ void	*philo_routine(void *arguments)
 		{
 
 			if (philo_is_dead(philo))
-				break ;
+				exit (0) ;
 			// philo_takes_forks(philo)
 			while (philo_takes_forks(philo) == 1) {
+				usleep(100);
+				if (philo_is_dead(philo))
+					exit (0) ;
 				// printf("philo %d is thinking\n", philo->id);
 			}
 			if (philo_is_dead(philo))
-				break ;
+				exit (0) ;
 			// printf("philo %d is eating\n", philo->id);
 			philo_is_eating(philo);
 			is_max_eat(philo);
@@ -86,13 +89,13 @@ void	*philo_routine(void *arguments)
 			// 	&& philo->data->num_of_meals == philo->data->num_of_philo * philo->data->must_eat_count)
 			// {
 			// 	philo->data->philo_dead = 1;
-			// 	// break ;
+			// 	// exit (0) ;
 			// }
 			if (philo_is_dead(philo))
-				break ;
+				exit (0) ;
 			philo_is_sleeping(philo);
 			if (philo_is_dead(philo))
-				break ;
+				exit (0) ;
 			philo_is_thinking(philo);
 		}
 	}
