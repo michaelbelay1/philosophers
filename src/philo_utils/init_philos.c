@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 23:15:10 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/22 16:05:41 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/23 13:52:46 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ unsigned long int	get_time(void)
 
 void	ft_sleep(unsigned long int time, t_philo *philo)
 {
-	// pthread_mutex_lock(&philo->data->mutex);
+	// pthread_mutex_lock(&philo->data->mutex_sleep);
 	unsigned long int	start;
-
+	
 	start = get_time();
 	while ((get_time() - start) < time)
 		usleep(philo->time_to_sleep);
-	// pthread_mutex_unlock(&philo->data->mutex);
+	// pthread_mutex_unlock(&philo->data->mutex_sleep);
 }
 
 int	init_philos(t_data *data)
@@ -83,7 +83,7 @@ int	mutex(t_data *data)
 	pthread_mutex_init(&data->mutex_dead, NULL);
 	pthread_mutex_init(&data->mutex_meals, NULL);
 	pthread_mutex_init(&data->mutex_test, NULL);
-	// pthread_mutex_init(&data->mutex_sleep, NULL);
+	pthread_mutex_init(&data->mutex_sleep, NULL);
 	return (0);
 }
 

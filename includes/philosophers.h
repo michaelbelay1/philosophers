@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 21:07:40 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/22 16:16:10 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/23 13:49:32 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_data
 	pthread_mutex_t			*forks;
 	pthread_mutex_t			mutex;
 	pthread_mutex_t			mutex_test;
-	// pthread_mutex_t			mutex_sleep;
+	pthread_mutex_t			mutex_sleep;
 	t_philo					*philo;
 }				t_data;
 
