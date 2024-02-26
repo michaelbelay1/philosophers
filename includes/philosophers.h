@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 21:07:40 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/26 20:02:15 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/26 22:01:09 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int					arg_num(int ac);
 int					args_all_num(char **av);
 int					init_struct(t_data *data, char **av);
 void				create_threads(t_data *data);
-void				*begin_monitoring(void *arg);
+int					begin_monitoring(void *arg);
 void				join_threads(t_data *data);
 unsigned long int	get_time(void);
 int					philo_takes_forks(t_philo *philo);
@@ -81,6 +81,7 @@ void				philo_is_eating(t_philo *philo);
 void				philo_is_sleeping(t_philo *philo);
 void				philo_is_thinking(t_philo *philo);
 int					philo_is_dead(t_philo *philo);
+void				is_max_eat(t_philo *philo);
 void				*philo_routine(void *arguments);
 void				ft_sleep(unsigned long int time, t_philo *philo);
 int					check_last_meal(t_philo *philo);

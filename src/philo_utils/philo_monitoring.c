@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 22:35:14 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/26 20:03:25 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/26 21:55:24 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,22 @@ int	check_last_meal(t_philo *philo)
 	{
 		pthread_mutex_lock(&philo->data->mutex_dead);
 		philo->data->philo_dead = 1;
-		printf("%lu %d died\n", get_time()
-			- philo->data->start_time, philo->id);
+		// printf("%lu %d died\n", get_time()
+		// 	- philo->data->start_time, philo->id);
 		pthread_mutex_unlock(&philo->data->mutex_dead);
 		return (0);
 	}
 	else
 		return (1);
+}
+
+void	is_max_eat(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data->mutex_meals);
+	if (philo->data->num_of_meals != -1
+		&& philo->data->num_of_meals == philo->data->num_of_philo * philo->data->must_eat_count)
+		philo->data->philo_dead = 1;
+	pthread_mutex_unlock(&philo->data->mutex_meals);
 }
 
 int	check_if_one_is_dead(t_data *data)
@@ -46,16 +55,17 @@ int	check_if_one_is_dead(t_data *data)
 	i = 0;
 	while (i < data->num_of_philo)
 	{
-		if (check_last_meal(&data->philo[i]) == 1)
-			return (1);
+		if (check_last_meal(&data->philo[i]) == 0)
+			return (i + 1);
 		i++;
 	}
 	return (0);
 }
 
-void	*begin_monitoring(void *arg)
+int	begin_monitoring(void *arg)
 {
 	t_data	*data;
+	int 	i;
 
 	data = (t_data *)arg;
 	while (1)
@@ -66,14 +76,15 @@ void	*begin_monitoring(void *arg)
 		{
 			pthread_mutex_unlock(&data->mutex_meals);
 			pthread_mutex_unlock(&data->mutex);
-			return (NULL);
+			return (0);
 		}
-		if (check_if_one_is_dead(data) == 1)
+		i = check_if_one_is_dead(data);
+		if (i)
 		{
 			usleep(100);
 			pthread_mutex_unlock(&data->mutex_meals);
 			pthread_mutex_unlock(&data->mutex);
-			return (NULL);
+			return (i);
 		}
 		pthread_mutex_unlock(&data->mutex_meals);
 		pthread_mutex_unlock(&data->mutex);

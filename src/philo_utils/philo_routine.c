@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 14:34:27 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/26 18:29:43 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/26 22:02:37 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ void	one_philo_case(t_philo *philo)
 	pthread_mutex_lock(&philo->data->mutex);
 	philo->data->philo_dead = 1;
 	pthread_mutex_unlock(&philo->data->mutex);
-	printf("%lu %d died\n", get_time()
-			- philo->data->start_time, philo->id);
+	// pthread_mutex_lock(&philo->data->mutex_dead);
+	// printf("%lu %d died\n", get_time()
+	// 		- philo->data->start_time, philo->id);
+	// pthread_mutex_unlock(&philo->data->mutex_dead);
 		// pthread_mutex_unlock(&philo->data->mutex);
 }
 
@@ -43,20 +45,6 @@ void	print_message(char *str, t_philo *philo)
 			- philo->data->start_time, philo->id, str);
 		pthread_mutex_unlock(&philo->data->mutex_dead);
 	}
-}
-void	is_max_eat(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->data->mutex);
-	if (philo->data->num_of_meals != -1
-		&& philo->data->num_of_meals == philo->data->num_of_philo * philo->data->must_eat_count)
-	{
-		philo->data->philo_dead = 1;
-		// pthread_mutex_unlock(philo->right_fork);
-		// pthread_mutex_unlock(philo->left_fork);
-		pthread_mutex_unlock(&philo->data->mutex);
-		return ;
-	}
-	pthread_mutex_unlock(&philo->data->mutex);
 }
 
 void	*philo_routine(void *arguments)
@@ -119,23 +107,4 @@ void	create_threads(t_data *data)
 			NULL, &philo_routine, (void *)&data->philo[i]);
 		i++;
 	}
-	// while (1)
-	// {
-	// 	pthread_mutex_lock(&data->mutex);
-	// 	if (data->philo_dead == 1)
-	// 	{
-	// 		usleep(100);
-	// 		pthread_mutex_unlock(&data->mutex);
-	// 		break ;
-	// 	}
-	// 	pthread_mutex_unlock(&data->mutex);
-	// 	usleep(200);
-	// }
-	// i = 0;
-	// while (i < data->num_of_philo)
-	// {
-	// 	pthread_join(data->philo[i].thread_id, NULL);
-	// 	i++;
-	// }
-	return ;
 }

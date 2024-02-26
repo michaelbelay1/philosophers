@@ -6,7 +6,7 @@
 #    By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/08 21:09:49 by mhaile            #+#    #+#              #
-#    Updated: 2024/02/22 19:49:39 by mhaile           ###   ########.fr        #
+#    Updated: 2024/02/26 22:03:45 by mhaile           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ rebonus: 		fclean bonus
 push: 			fclean
 				git add .
 				git commit -m "Updated on $(shell date +'%Y-%m-%d %H:%M:%S') by $(USER)"
-				git push -u origin master
+				git push 
+# -u origin master
 
 .PHONY: 		all clean fclean re
