@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 21:12:09 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/21 16:19:55 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/26 17:38:22 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	create_threads(&data);
-	// begin_monitoring(&data);
-	// join_threads(&data);
+	begin_monitoring(&data);
+	join_threads(&data);
 	free(data.forks_taken);
 	free(data.forks);
 	free(data.philo);

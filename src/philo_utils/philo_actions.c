@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:27:02 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/23 16:03:56 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/26 19:54:52 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,31 @@
 
 int	philo_takes_forks(t_philo *philo)
 {
-	pthread_mutex_lock(philo->left_fork);
-	pthread_mutex_lock(philo->right_fork);
-	if (philo->data->forks_taken[philo->id - 1] == 0)
-		philo->data->forks_taken[philo->id - 1] = 1;
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_lock(philo->left_fork);
+		pthread_mutex_lock(philo->right_fork);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->right_fork);
+		pthread_mutex_lock(philo->left_fork);
+	}
+	if (philo->data->forks_taken[philo->id - 1] && philo->data->forks_taken[philo->id - 1] != philo->id)
+		philo->data->forks_taken[philo->id - 1] = 0;
 	else
 	{
 		pthread_mutex_unlock(philo->right_fork);
 		pthread_mutex_unlock(philo->left_fork);
 		return (1);
 	}
-	if (philo->id == philo->num_of_philo && philo->data->forks_taken[0] == 0)
-	{
-		philo->data->forks_taken[0] = 1;
-	}
-	else if (philo->data->forks_taken[philo->id] == 0)
-	{
-		philo->data->forks_taken[philo->id] = 1;
-	}
+	if (philo->id == philo->num_of_philo && (philo->data->forks_taken[0] && philo->data->forks_taken[0] != philo->id))
+		philo->data->forks_taken[0] = 0;
+	else if (philo->data->forks_taken[philo->id] && philo->data->forks_taken[philo->id] != philo->id)
+		philo->data->forks_taken[philo->id] = 0;
 	else
 	{
-		philo->data->forks_taken[philo->id - 1] = 0;
+		philo->data->forks_taken[philo->id - 1] = 1;
 		pthread_mutex_unlock(philo->right_fork);
 		pthread_mutex_unlock(philo->left_fork);
 		return (1);
@@ -60,14 +64,21 @@ void	philo_is_eating(t_philo *philo)
 	if (philo->data->num_of_meals != -1)
 		philo->data->num_of_meals++;
 	pthread_mutex_unlock(&philo->data->mutex);
-
-	philo->data->forks_taken[philo->id - 1] = 0;
+	philo->data->forks_taken[philo->id - 1] = philo->id;
 	if (philo->id == philo->num_of_philo)
-		philo->data->forks_taken[0] = 0;
+		philo->data->forks_taken[0] = philo->id;
 	else
-		philo->data->forks_taken[philo->id] = 0;
-	pthread_mutex_unlock(philo->right_fork);
-	pthread_mutex_unlock(philo->left_fork);
+		philo->data->forks_taken[philo->id] = philo->id;
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);
+	}
 }
 
 void	philo_is_sleeping(t_philo *philo)
@@ -93,8 +104,9 @@ int	philo_is_dead(t_philo *philo)
 	if (!check_last_meal(philo))
 	{
 		pthread_mutex_lock(&philo->data->mutex_dead);
-		printf("%lu %d died\n", get_time()
-			- philo->data->start_time, philo->id);
+		// printf("%lu %d died\n", get_time()
+		// 	- philo->data->start_time, philo->id);
+		philo->data->philo_dead = 1;
 		pthread_mutex_unlock(&philo->data->mutex_dead);
 		pthread_mutex_unlock(&philo->data->mutex);
 		return (1);
