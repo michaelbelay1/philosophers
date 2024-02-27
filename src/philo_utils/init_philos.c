@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 23:15:10 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/26 20:02:18 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/27 15:05:36 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,11 @@ unsigned long int	get_time(void)
 
 void	ft_sleep(unsigned long int time, t_philo *philo)
 {
-	// pthread_mutex_lock(&philo->data->mutex_sleep);
 	unsigned long int	start;
-	
+
 	start = get_time();
 	while ((get_time() - start) < time)
 		usleep(philo->time_to_sleep);
-	// pthread_mutex_unlock(&philo->data->mutex_sleep);
 }
 
 int	init_philos(t_data *data)
@@ -53,8 +51,6 @@ int	init_philos(t_data *data)
 		data->philo[i].time_to_sleep = data->time_to_sleep;
 		data->philo[i].data = data;
 		data->philo[i].is_eating = 0;
-		// data->philo[i].num_of_meals = 0;
-		// data->philo[i].thread_id = 0;
 		data->philo[i].num_of_philo = data->num_of_philo;
 	}
 	return (0);
@@ -79,32 +75,25 @@ int	mutex(t_data *data)
 		data->forks_taken[j] = 1;
 	pthread_mutex_init(&data->mutex, NULL);
 	pthread_mutex_init(&data->mutex_eat, NULL);
-	// pthread_mutex_init(&data->mutex_print, NULL);
 	pthread_mutex_init(&data->mutex_dead, NULL);
 	pthread_mutex_init(&data->mutex_meals, NULL);
-	pthread_mutex_init(&data->mutex_test, NULL);
 	pthread_mutex_init(&data->mutex_sleep, NULL);
+	pthread_mutex_init(&data->mutex_last_meal, NULL);
 	return (0);
 }
 
 int	init_struct(t_data *data, char **av)
 {
 	data->num_of_philo = ft_atoi_l(av[1]);
-	if (data->num_of_philo < 0 || data->num_of_philo > INT_MAX)
+	if (data->num_of_philo < 0)
 		return (1);
 	data->time_to_die = ft_atoi_l(av[2]);
-	if (data->time_to_die > INT_MAX)
-		return (1);
 	data->time_to_eat = ft_atoi_l(av[3]);
-	if (data->time_to_eat > INT_MAX)
-		return (1);
 	data->time_to_sleep = ft_atoi_l(av[4]);
-	if (data->time_to_sleep > INT_MAX)
-		return (1);
 	if (av[5])
 	{
 		data->must_eat_count = ft_atoi_l(av[5]);
-		if (data->must_eat_count < 0 || data->must_eat_count > INT_MAX)
+		if (data->must_eat_count < 0)
 			return (1);
 	}
 	else

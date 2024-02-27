@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 14:34:27 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/26 22:02:37 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/27 14:50:35 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,6 @@ void	one_philo_case(t_philo *philo)
 	pthread_mutex_lock(&philo->data->mutex);
 	philo->data->philo_dead = 1;
 	pthread_mutex_unlock(&philo->data->mutex);
-	// pthread_mutex_lock(&philo->data->mutex_dead);
-	// printf("%lu %d died\n", get_time()
-	// 		- philo->data->start_time, philo->id);
-	// pthread_mutex_unlock(&philo->data->mutex_dead);
-		// pthread_mutex_unlock(&philo->data->mutex);
 }
 
 void	print_message(char *str, t_philo *philo)
@@ -45,6 +40,34 @@ void	print_message(char *str, t_philo *philo)
 			- philo->data->start_time, philo->id, str);
 		pthread_mutex_unlock(&philo->data->mutex_dead);
 	}
+}
+
+int	take_fork_eat(t_philo *philo)
+{
+	if (philo_is_dead(philo))
+		return (0);
+	while (philo_takes_forks(philo) == 1)
+	{
+		usleep(100);
+		if (philo_is_dead(philo))
+			return (0);
+	}
+	if (philo_is_dead(philo))
+	{
+		if (philo->id % 2 == 0)
+		{
+			pthread_mutex_unlock(philo->right_fork);
+			pthread_mutex_unlock(philo->left_fork);
+		}
+		else
+		{
+			pthread_mutex_unlock(philo->left_fork);
+			pthread_mutex_unlock(philo->right_fork);
+		}
+		return (0);
+	}
+	philo_is_eating(philo);
+	return (1);
 }
 
 void	*philo_routine(void *arguments)
@@ -60,29 +83,8 @@ void	*philo_routine(void *arguments)
 			make_philo_think(philo);
 		while (1)
 		{
-			if (philo_is_dead(philo))
+			if (!take_fork_eat(philo))
 				return (0);
-			while (philo_takes_forks(philo) == 1)
-			{
-				usleep(100);
-				if (philo_is_dead(philo))
-					return (0);
-			}
-			if (philo_is_dead(philo))
-			{
-				if (philo->id % 2 == 0)
-				{
-					pthread_mutex_unlock(philo->right_fork);
-					pthread_mutex_unlock(philo->left_fork);
-				}
-				else
-				{
-					pthread_mutex_unlock(philo->left_fork);
-					pthread_mutex_unlock(philo->right_fork);
-				}
-				return (0);
-			}
-			philo_is_eating(philo);
 			is_max_eat(philo);
 			if (philo_is_dead(philo))
 				return (0);
@@ -93,18 +95,4 @@ void	*philo_routine(void *arguments)
 		}
 	}
 	return (0);
-}
-
-void	create_threads(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	data->start_time = get_time();
-	while (i < data->num_of_philo)
-	{
-		pthread_create(&data->philo[i].thread_id,
-			NULL, &philo_routine, (void *)&data->philo[i]);
-		i++;
-	}
 }

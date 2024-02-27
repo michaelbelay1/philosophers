@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:26:31 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/14 22:19:06 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/27 13:42:24 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ int	args_all_num(char **av)
 		if (!is_str_numeric(av[i]))
 		{
 			ft_putstr_fd("Invalid arguments\n", 2);
+			return (1);
+		}
+		if (ft_atoi_l(av[i]) > INT_MAX)
+		{
+			ft_putstr_fd("Input should be below INT_MAX\n", 2);
 			return (1);
 		}
 	}

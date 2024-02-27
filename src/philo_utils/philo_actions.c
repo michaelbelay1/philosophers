@@ -6,15 +6,38 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:27:02 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/26 19:54:52 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/27 14:55:06 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philosophers.h"
-/* 2 cases check:
-	1. availability of the fork.
-	2. ydegm keyhlu iti specific philo	
-*/
+
+int	pick_up_forks(t_philo *philo)
+{
+	if (philo->data->forks_taken[philo->id - 1]
+		&& philo->data->forks_taken[philo->id - 1] != philo->id)
+		philo->data->forks_taken[philo->id - 1] = 0;
+	else
+	{
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+		return (1);
+	}
+	if (philo->id == philo->num_of_philo && (philo->data->forks_taken[0]
+			&& philo->data->forks_taken[0] != philo->id))
+		philo->data->forks_taken[0] = 0;
+	else if (philo->data->forks_taken[philo->id]
+		&& philo->data->forks_taken[philo->id] != philo->id)
+		philo->data->forks_taken[philo->id] = 0;
+	else
+	{
+		philo->data->forks_taken[philo->id - 1] = 1;
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+		return (1);
+	}
+	return (0);
+}
 
 int	philo_takes_forks(t_philo *philo)
 {
@@ -28,25 +51,8 @@ int	philo_takes_forks(t_philo *philo)
 		pthread_mutex_lock(philo->right_fork);
 		pthread_mutex_lock(philo->left_fork);
 	}
-	if (philo->data->forks_taken[philo->id - 1] && philo->data->forks_taken[philo->id - 1] != philo->id)
-		philo->data->forks_taken[philo->id - 1] = 0;
-	else
-	{
-		pthread_mutex_unlock(philo->right_fork);
-		pthread_mutex_unlock(philo->left_fork);
+	if (pick_up_forks(philo))
 		return (1);
-	}
-	if (philo->id == philo->num_of_philo && (philo->data->forks_taken[0] && philo->data->forks_taken[0] != philo->id))
-		philo->data->forks_taken[0] = 0;
-	else if (philo->data->forks_taken[philo->id] && philo->data->forks_taken[philo->id] != philo->id)
-		philo->data->forks_taken[philo->id] = 0;
-	else
-	{
-		philo->data->forks_taken[philo->id - 1] = 1;
-		pthread_mutex_unlock(philo->right_fork);
-		pthread_mutex_unlock(philo->left_fork);
-		return (1);
-	}
 	print_message("has taken a fork", philo);
 	print_message("has taken a fork", philo);
 	return (0);
@@ -91,26 +97,4 @@ void	philo_is_thinking(t_philo *philo)
 {
 	print_message("is thinking", philo);
 	usleep(50);
-}
-
-int	philo_is_dead(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->data->mutex);
-	if (philo->data->philo_dead == 1)
-	{
-		pthread_mutex_unlock(&philo->data->mutex);
-		return (1);
-	}
-	if (!check_last_meal(philo))
-	{
-		pthread_mutex_lock(&philo->data->mutex_dead);
-		// printf("%lu %d died\n", get_time()
-		// 	- philo->data->start_time, philo->id);
-		philo->data->philo_dead = 1;
-		pthread_mutex_unlock(&philo->data->mutex_dead);
-		pthread_mutex_unlock(&philo->data->mutex);
-		return (1);
-	}
-	pthread_mutex_unlock(&philo->data->mutex);
-	return (0);
 }

@@ -6,11 +6,37 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 21:12:09 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/26 22:01:47 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/27 14:55:44 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/philosophers.h"
+
+void	create_threads(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	data->start_time = get_time();
+	while (i < data->num_of_philo)
+	{
+		pthread_create(&data->philo[i].thread_id,
+			NULL, &philo_routine, (void *)&data->philo[i]);
+		i++;
+	}
+}
+
+void	join_threads(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->num_of_philo)
+	{
+		pthread_join(data->philo[i].thread_id, NULL);
+		i++;
+	}
+}
 
 int	main(int ac, char **av)
 {
@@ -21,7 +47,7 @@ int	main(int ac, char **av)
 		return (1);
 	if (init_struct(&data, av))
 	{
-		printf("Invalid argument\n");
+		ft_putstr_fd("Invalid argument\n", 2);
 		return (1);
 	}
 	create_threads(&data);
