@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 21:07:40 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/27 14:52:16 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/27 16:13:19 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct s_philo
 	unsigned long int		time_to_die;
 	unsigned long int		time_to_eat;
 	unsigned long int		time_to_sleep;
-	int						is_eating;
 	int						*forks_taken_left;
 	int						*forks_taken_right;
 	pthread_t				thread_id;
@@ -48,37 +47,38 @@ typedef struct s_data
 	int						philo_dead;
 	unsigned long int		start_time;
 	int						*forks_taken;
-	pthread_mutex_t			mutex_eat;
 	pthread_mutex_t			mutex_dead;
 	pthread_mutex_t			mutex_meals;
 	pthread_mutex_t			*forks;
 	pthread_mutex_t			mutex;
-	pthread_mutex_t			mutex_last_meal;
 	pthread_mutex_t			mutex_sleep;
+	pthread_mutex_t			mutex_timer;
 	t_philo					*philo;
 }				t_data;
 
-//libft
+//************************ Libft ************************//
 long long int		ft_atoi_l(const char *str);
 void				ft_putstr_fd(char *s, int fd);
 int					ft_isdigit(int c);
 
-//philo
-void				print_message(char *str, t_philo *philo);
-int					arg_num(int ac);
+//************************ Parsing ************************//
 int					args_all_num(char **av);
+int					arg_num(int ac);
+
+//************************ Philosophers ************************//
 int					init_struct(t_data *data, char **av);
 void				create_threads(t_data *data);
 int					begin_monitoring(void *arg);
-void				join_threads(t_data *data);
-unsigned long int	get_time(void);
 int					philo_takes_forks(t_philo *philo);
 void				philo_is_eating(t_philo *philo);
 void				philo_is_sleeping(t_philo *philo);
 void				philo_is_thinking(t_philo *philo);
+void				print_message(char *str, t_philo *philo);
+void				*philo_routine(void *arguments);
+void				join_threads(t_data *data);
+unsigned long int	get_time(void);
 int					philo_is_dead(t_philo *philo);
 void				is_max_eat(t_philo *philo);
-void				*philo_routine(void *arguments);
 void				ft_sleep(unsigned long int time, t_philo *philo);
 int					check_last_meal(t_philo *philo);
 void				one_philo_case(t_philo *philo);

@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 22:35:14 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/27 14:50:40 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/27 21:37:55 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,16 @@ int	philo_is_dead(t_philo *philo)
 
 int	check_last_meal(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->mutex_last_meal);
+	pthread_mutex_lock(&philo->data->mutex_timer);
 	if (get_time() - philo->data->start_time >= philo->time_to_die)
 	{
 		philo->data->philo_dead = 1;
-		pthread_mutex_unlock(&philo->data->mutex_last_meal);
+		pthread_mutex_unlock(&philo->data->mutex_timer);
 		return (0);
 	}
 	else
 	{
-		pthread_mutex_unlock(&philo->data->mutex_last_meal);
+		pthread_mutex_unlock(&philo->data->mutex_timer);
 		return (1);
 	}
 }
@@ -81,21 +81,17 @@ int	begin_monitoring(void *arg)
 	while (1)
 	{
 		pthread_mutex_lock(&data->mutex);
-		pthread_mutex_lock(&data->mutex_meals);
 		if (data->philo_dead == 1)
 		{
-			pthread_mutex_unlock(&data->mutex_meals);
 			pthread_mutex_unlock(&data->mutex);
 			return (0);
 		}
 		dead_philo = check_if_one_is_dead(data);
 		if (dead_philo)
 		{
-			pthread_mutex_unlock(&data->mutex_meals);
 			pthread_mutex_unlock(&data->mutex);
 			return (dead_philo);
 		}
-		pthread_mutex_unlock(&data->mutex_meals);
 		pthread_mutex_unlock(&data->mutex);
 		usleep(200);
 	}
