@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 23:15:10 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/27 16:13:37 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/27 22:50:52 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	mutex(t_data *data)
 int	init_struct(t_data *data, char **av)
 {
 	data->num_of_philo = ft_atoi_l(av[1]);
-	if (data->num_of_philo < 0)
+	if (data->num_of_philo <= 0)
 		return (1);
 	data->time_to_die = ft_atoi_l(av[2]);
 	data->time_to_eat = ft_atoi_l(av[3]);
@@ -91,7 +91,7 @@ int	init_struct(t_data *data, char **av)
 	if (av[5])
 	{
 		data->must_eat_count = ft_atoi_l(av[5]);
-		if (data->must_eat_count < 0)
+		if (data->must_eat_count <= 0)
 			return (1);
 	}
 	else

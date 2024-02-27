@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:27:02 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/27 16:38:59 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/27 22:19:23 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ int	philo_takes_forks(t_philo *philo)
 	}
 	if (pick_up_forks(philo))
 		return (1);
-	print_message("has taken a fork", philo);
-	print_message("has taken a fork", philo);
+	print_message("\033[1;36mhas taken a fork\033[0m", philo);
+	print_message("\033[1;36mhas taken a fork\033[0m", philo);
 	return (0);
 }
 
 void	philo_is_eating(t_philo *philo)
 {
-	print_message("is eating", philo);
+	print_message("\033[1;32m\033[0m\033[1;32mis eating\033[0m", philo);
 	pthread_mutex_lock(&philo->data->mutex);
 	philo->last_eat = get_time() - philo->data->start_time;
 	philo->time_to_die = philo->last_eat + philo->data->time_to_die;
@@ -89,12 +89,12 @@ void	philo_is_eating(t_philo *philo)
 
 void	philo_is_sleeping(t_philo *philo)
 {
-	print_message("is sleeping", philo);
+	print_message("\033[1;95mis sleeping\033[0m", philo);
 	ft_sleep(philo->data->time_to_sleep, philo);
 }
 
 void	philo_is_thinking(t_philo *philo)
 {
-	print_message("is thinking", philo);
+	print_message("\033[1;97mis thinking\033[0m", philo);
 	usleep(50);
 }

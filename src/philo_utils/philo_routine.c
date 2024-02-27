@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 14:34:27 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/27 14:50:35 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/27 22:40:13 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	make_philo_think(t_philo *philo)
 {
-	print_message("is thinking", philo);
+	(void)philo;
+	// print_message("\033[1;97mis thinking\033[0m", philo);
 	usleep(1000);
 	return (1);
 }
@@ -23,7 +24,7 @@ void	one_philo_case(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
 	if (!philo_is_dead(philo))
-		print_message("has taken a fork", philo);
+		print_message("\033[1;36mhas taken a fork\033[0m", philo);
 	pthread_mutex_unlock(philo->left_fork);
 	ft_sleep(philo->time_to_die, philo);
 	pthread_mutex_lock(&philo->data->mutex);
