@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 22:35:14 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/27 21:37:55 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/02/28 10:55:33 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ int	check_last_meal(t_philo *philo)
 	pthread_mutex_lock(&philo->data->mutex_timer);
 	if (get_time() - philo->data->start_time >= philo->time_to_die)
 	{
+		pthread_mutex_lock(&philo->data->mutex_dead);
 		philo->data->philo_dead = 1;
+		pthread_mutex_unlock(&philo->data->mutex_dead);
 		pthread_mutex_unlock(&philo->data->mutex_timer);
 		return (0);
 	}
