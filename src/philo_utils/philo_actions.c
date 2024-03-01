@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:27:02 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/27 22:19:23 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/01 15:13:56 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,15 @@ int	philo_takes_forks(t_philo *philo)
 void	philo_is_eating(t_philo *philo)
 {
 	print_message("\033[1;32m\033[0m\033[1;32mis eating\033[0m", philo);
-	pthread_mutex_lock(&philo->data->mutex);
+	pthread_mutex_lock(&philo->data->mutex_dead);
 	philo->last_eat = get_time() - philo->data->start_time;
 	philo->time_to_die = philo->last_eat + philo->data->time_to_die;
-	pthread_mutex_unlock(&philo->data->mutex);
+	pthread_mutex_unlock(&philo->data->mutex_dead);
 	ft_sleep(philo->data->time_to_eat, philo);
-	pthread_mutex_lock(&philo->data->mutex);
+	pthread_mutex_lock(&philo->data->mutex_meals);
 	if (philo->data->num_of_meals != -1)
 		philo->data->num_of_meals++;
-	pthread_mutex_unlock(&philo->data->mutex);
+	pthread_mutex_unlock(&philo->data->mutex_meals);
 	philo->data->forks_taken[philo->id - 1] = philo->id;
 	if (philo->id == philo->num_of_philo)
 		philo->data->forks_taken[0] = philo->id;

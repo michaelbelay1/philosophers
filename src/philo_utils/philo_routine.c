@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 14:34:27 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/27 22:40:13 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/01 16:32:30 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@ void	one_philo_case(t_philo *philo)
 		print_message("\033[1;36mhas taken a fork\033[0m", philo);
 	pthread_mutex_unlock(philo->left_fork);
 	ft_sleep(philo->time_to_die, philo);
-	pthread_mutex_lock(&philo->data->mutex);
+	pthread_mutex_lock(&philo->data->mutex_dead);
 	philo->data->philo_dead = 1;
-	pthread_mutex_unlock(&philo->data->mutex);
+	pthread_mutex_unlock(&philo->data->mutex_dead);
 }
 
 void	print_message(char *str, t_philo *philo)
 {
 	if (!philo_is_dead(philo))
 	{
-		pthread_mutex_lock(&philo->data->mutex_dead);
+		pthread_mutex_lock(&philo->data->mutex_print);
 		printf("%ld %d %s\n", get_time()
 			- philo->data->start_time, philo->id, str);
-		pthread_mutex_unlock(&philo->data->mutex_dead);
+		pthread_mutex_unlock(&philo->data->mutex_print);
 	}
 }
 

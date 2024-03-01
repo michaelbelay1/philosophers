@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 21:07:40 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/27 16:13:19 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/01 16:36:21 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,10 @@ typedef struct s_data
 	int						philo_dead;
 	unsigned long int		start_time;
 	int						*forks_taken;
-	pthread_mutex_t			mutex_dead;
-	pthread_mutex_t			mutex_meals;
 	pthread_mutex_t			*forks;
-	pthread_mutex_t			mutex;
-	pthread_mutex_t			mutex_sleep;
-	pthread_mutex_t			mutex_timer;
+	pthread_mutex_t			mutex_dead;
+	pthread_mutex_t			mutex_print;
+	pthread_mutex_t			mutex_meals;
 	t_philo					*philo;
 }				t_data;
 
