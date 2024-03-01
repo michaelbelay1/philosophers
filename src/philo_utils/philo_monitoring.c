@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 22:35:14 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/01 16:13:51 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/01 20:35:31 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ int	check_last_meal(t_philo *philo)
 
 void	is_max_eat(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->mutex_dead);
 	pthread_mutex_lock(&philo->data->mutex_meals);
+	pthread_mutex_lock(&philo->data->mutex_dead);
 	if (philo->data->must_eat_count != -1
 		&& philo->data->num_of_meals >= philo->data->num_of_philo
 		* philo->data->must_eat_count)
 		philo->data->philo_dead = 1;
-	pthread_mutex_unlock(&philo->data->mutex_meals);
 	pthread_mutex_unlock(&philo->data->mutex_dead);
+	pthread_mutex_unlock(&philo->data->mutex_meals);
 }
 
 int	check_if_one_is_dead(t_data *data)

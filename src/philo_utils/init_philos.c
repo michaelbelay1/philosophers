@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 23:15:10 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/01 16:18:25 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/01 20:18:20 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,30 @@ unsigned long int	get_time(void)
 
 void	ft_sleep(unsigned long int time, t_philo *philo)
 {
-	unsigned long int	start;
+	unsigned long	start;
 
 	start = get_time();
+	pthread_mutex_lock(&philo->data->mutex_dead);
+	// if (philo->data->philo_dead)
+	// {
+	// 	pthread_mutex_unlock(&philo->data->mutex_dead);
+	// 	return ;
+	// }
+	// while ((get_time() - start) < time)
+	// 	usleep(100);
+	// pthread_mutex_unlock(&philo->data->mutex_dead);
 	while ((get_time() - start) < time)
 	{
-		pthread_mutex_lock(&philo->data->mutex_dead);
+		pthread_mutex_unlock(&philo->data->mutex_dead);
 		if (philo->data->philo_dead)
 		{
-			pthread_mutex_unlock(&philo->data->mutex_dead);
+			// pthread_mutex_unlock(&philo->data->mutex_dead);
 			return ;
 		}
-		pthread_mutex_unlock(&philo->data->mutex_dead);
 		usleep(200);
+		pthread_mutex_lock(&philo->data->mutex_dead);
 	}
+	pthread_mutex_unlock(&philo->data->mutex_dead);
 }
 
 int	init_philos(t_data *data)

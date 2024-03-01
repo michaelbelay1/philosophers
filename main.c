@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 21:12:09 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/01 15:55:27 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/01 20:46:09 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	join_threads(t_data *data)
 int	main(int ac, char **av)
 {
 	t_data	data;
-	int		philo_dead;
+	int		philo_dead_id;
 
 	if (arg_num(ac) || args_all_num(av))
 		return (1);
@@ -51,13 +51,25 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	create_threads(&data);
-	philo_dead = begin_monitoring(&data);
-	if (philo_dead)
+	if (data.num_of_philo == 1)
 	{
-		pthread_mutex_lock(&data.mutex_dead);
-		printf("\033[0;31m%lu %d died \033[0m\n", get_time()
-			- data.philo->data->start_time, philo_dead);
-		pthread_mutex_unlock(&data.mutex_dead);
+		pthread_mutex_lock(data.philo->left_fork);
+		print_message("\033[1;36mhas taken a fork\033[0m", data.philo);
+		usleep(data.time_to_die * 1000);
+		printf("\033[0;31m%lu 1 died \033[0m\n", get_time()
+			- data.philo->data->start_time);
+		pthread_mutex_unlock(data.philo->left_fork);
+	}
+	else
+	{
+		philo_dead_id = begin_monitoring(&data);
+		if (philo_dead_id)
+		{
+			pthread_mutex_lock(&data.mutex_dead);
+			printf("\033[0;31m%lu %d died \033[0m\n", get_time()
+				- data.philo->data->start_time, philo_dead_id);
+			pthread_mutex_unlock(&data.mutex_dead);
+		}
 	}
 	for (int i = 0; i < data.num_of_philo; i++)
 	{
