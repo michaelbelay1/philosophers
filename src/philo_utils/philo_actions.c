@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:27:02 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/02 21:02:46 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/02 22:26:40 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	pick_up_forks(t_philo *philo)
 	if (philo->id == philo->num_of_philo && (philo->data->forks_taken[0]
 			&& philo->data->forks_taken[0] != philo->id))
 		philo->data->forks_taken[0] = 0;
-	else if (philo->data->forks_taken[philo->id]
+	else if (philo->id != philo->num_of_philo
+		&& philo->data->forks_taken[philo->id]
 		&& (philo->data->forks_taken[philo->id] != philo->id))
 		philo->data->forks_taken[philo->id] = 0;
 	else
@@ -37,8 +38,7 @@ int	pick_up_forks(t_philo *philo)
 		return (1);
 	}
 	pthread_mutex_unlock(philo->right_fork);
-	pthread_mutex_unlock(philo->left_fork);
-	return (0);
+	return (pthread_mutex_unlock(philo->left_fork), 0);
 }
 
 int	philo_takes_forks(t_philo *philo)

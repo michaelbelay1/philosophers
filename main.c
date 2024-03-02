@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 21:12:09 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/02 20:04:09 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/02 22:25:45 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ int	main(int ac, char **av)
 	else
 	{
 		philo_dead_id = begin_monitoring(&data);
+		join_threads(&data);
 		if (philo_dead_id)
 		{
-			join_threads(&data);
 			pthread_mutex_lock(&data.mutex_dead);
 			pthread_mutex_lock(&data.mutex_print);
 			printf("\033[0;31m%lu %d died \033[0m\n", get_time()
