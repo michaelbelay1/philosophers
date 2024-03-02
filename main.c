@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 21:12:09 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/02 18:25:26 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/02 19:18:46 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,17 @@ int	main(int ac, char **av)
 			pthread_mutex_unlock(&data.mutex_dead);
 		}
 	}
-	close_up(&data);
+	for (int i = 0; i < data.num_of_philo; i++)
+	{
+		if (pthread_mutex_lock(&data.forks[i]) == 0)
+			pthread_mutex_unlock(&data.forks[i]);
+		else
+			pthread_mutex_unlock(&data.forks[i]);
+	}
+	join_threads(&data);
+	for (int i = 0; i < data.num_of_philo; i++)
+		pthread_mutex_destroy(&data.forks[i]);
+	free(data.forks_taken);
+	free(data.forks);
+	free(data.philo);
 }

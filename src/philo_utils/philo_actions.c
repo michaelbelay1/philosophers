@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:27:02 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/02 18:23:56 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/02 19:18:06 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ void	dropfoks(t_philo *philo)
 
 int	philo_is_eating(t_philo *philo)
 {
-	print_message("\033[1;32m\033[0m\033[1;32mis eating\033[0m", philo);
+	// print_message("\033[1;95mis sleeping\033[0m", philo);
+	// ft_sleep(philo->data->time_to_sleep, philo);
 	pthread_mutex_lock(&philo->data->mutex_dead);
 	philo->last_eat = get_time() - philo->data->start_time;
 	philo->time_to_die = philo->last_eat + philo->data->time_to_die;
