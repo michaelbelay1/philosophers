@@ -30,6 +30,11 @@ void	one_philo_case(t_philo *philo)
 	pthread_mutex_lock(&philo->data->mutex_dead);
 	philo->data->philo_dead = 1;
 	pthread_mutex_unlock(&philo->data->mutex_dead);
+	pthread_mutex_lock(&philo->data->mutex_print);
+	printf("\033[0;31m%lu %d died \033[0m\n", get_time()
+		- philo->data->start_time, 1);
+	pthread_mutex_unlock(&philo->data->mutex_print);
+	join_threads(philo->data);
 }
 
 void	print_message(char *str, t_philo *philo)

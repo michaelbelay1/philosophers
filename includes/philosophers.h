@@ -82,5 +82,6 @@ void				one_philo_case(t_philo *philo);
 int					check_if_one_is_dead(t_data *data);
 int					isdead(t_data *data);
 void				dropfoks(t_philo *philo);
+void				close_up(t_data *data);
 
 #endif

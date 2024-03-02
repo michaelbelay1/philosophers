@@ -5,3 +5,7 @@ solved
 2 0 0 0 1 (handle all the zero)
 
 ./philo 5 800 200 200 1 leaks
+
+brand new cases
+philo 1 800 200 200 (philo dead print not working)
+valgrind ./philo "1" 800 200 200 5  (leaks)
