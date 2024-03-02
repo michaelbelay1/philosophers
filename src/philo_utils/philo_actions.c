@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:27:02 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/01 20:33:07 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/02 12:58:43 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ void	philo_is_eating(t_philo *philo)
 
 void	philo_is_sleeping(t_philo *philo)
 {
-	// print_message("\033[1;95mis sleeping\033[0m", philo);
-	// ft_sleep(philo->data->time_to_sleep, philo);
 	pthread_mutex_lock(&philo->data->mutex_dead);
 	if (philo->data->philo_dead == 0)
 	{
