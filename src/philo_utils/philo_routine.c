@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 14:34:27 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/02 20:12:41 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/02 21:01:00 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,13 @@
 
 int	isdead(t_data *data)
 {
-	int res;
+	int	res;
+
+	res = 0;
 	pthread_mutex_lock(&data->mutex_dead);
 	res = data->philo_dead;
 	pthread_mutex_unlock(&data->mutex_dead);
-	
 	return (res);
-}
-
-int	make_philo_think(t_philo *philo)
-{
-	(void)philo;
-	usleep(1500);
-	return (1);
-}
-
-void	clean_up(t_data *data)
-{
-	int	idx;
-
-	idx = -1;
-	while (++idx < data->num_of_philo)
-	{
-		if (pthread_mutex_lock(&data->forks[idx]) == 0)
-			pthread_mutex_unlock(&data->forks[idx]);
-		else
-			pthread_mutex_unlock(&data->forks[idx]);
-	}
-	join_threads(data);
-	idx = -1;
-	while (++idx < data->num_of_philo)
-		pthread_mutex_destroy(&data->forks[idx]);
-	free(data->forks_taken);
-	free(data->forks);
-	free(data->philo);
 }
 
 void	one_philo_case(t_philo *philo)
@@ -97,7 +70,7 @@ void	*philo_routine(void *arguments)
 	else
 	{
 		if (philo->id % 2 == 0)
-			make_philo_think(philo);
+			usleep(1500);
 		while (!isdead(philo->data))
 		{
 			usleep(30);
@@ -105,9 +78,9 @@ void	*philo_routine(void *arguments)
 				break ;
 			is_max_eat(philo);
 			if (!philo_is_sleeping(philo))
-				break;
+				break ;
 			if (!philo_is_thinking(philo))
-				break;
+				break ;
 		}
 	}
 	return (0);

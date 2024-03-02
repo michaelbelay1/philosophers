@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 22:35:14 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/02 20:12:54 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/02 21:02:56 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_last_meal(t_philo *philo)
 {
-		pthread_mutex_lock(&philo->data->mutex_dead);
+	pthread_mutex_lock(&philo->data->mutex_dead);
 	if (get_time() - philo->data->start_time >= philo->time_to_die)
 	{
 		philo->data->philo_dead = 1;
@@ -28,16 +28,28 @@ int	check_last_meal(t_philo *philo)
 	}
 }
 
+void	dropfoks(t_philo *philo)
+{
+	pthread_mutex_lock(philo->left_fork);
+	pthread_mutex_lock(philo->right_fork);
+	philo->data->forks_taken[philo->id - 1] = philo->id;
+	if (philo->id == philo->num_of_philo)
+		philo->data->forks_taken[0] = philo->id;
+	else
+		philo->data->forks_taken[philo->id] = philo->id;
+	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
+}
+
 void	is_max_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->mutex_meals);
 	if (philo->data->must_eat_count != -1
 		&& philo->data->num_of_meals >= philo->data->num_of_philo
-		* philo->data->must_eat_count) 
+		* philo->data->must_eat_count)
 	{
-
 		pthread_mutex_lock(&philo->data->mutex_dead);
-			philo->data->philo_dead = 1;
+		philo->data->philo_dead = 1;
 		pthread_mutex_unlock(&philo->data->mutex_dead);
 	}
 	pthread_mutex_unlock(&philo->data->mutex_meals);
