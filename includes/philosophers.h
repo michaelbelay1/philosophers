@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 21:07:40 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/02 12:59:31 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/02 20:04:28 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,18 @@ int					init_struct(t_data *data, char **av);
 void				create_threads(t_data *data);
 int					begin_monitoring(void *arg);
 int					philo_takes_forks(t_philo *philo);
-void				philo_is_eating(t_philo *philo);
-void				philo_is_sleeping(t_philo *philo);
-void				philo_is_thinking(t_philo *philo);
+int					philo_is_eating(t_philo *philo);
+int					philo_is_sleeping(t_philo *philo);
+int					philo_is_thinking(t_philo *philo);
 void				print_message(char *str, t_philo *philo);
 void				*philo_routine(void *arguments);
 void				join_threads(t_data *data);
 unsigned long int	get_time(void);
 int					philo_is_dead(t_philo *philo);
 void				is_max_eat(t_philo *philo);
-void				ft_sleep(unsigned long int time, t_philo *philo);
+int					ft_sleep(unsigned long int time, t_philo *philo);
 int					check_last_meal(t_philo *philo);
 void				one_philo_case(t_philo *philo);
 int					check_if_one_is_dead(t_data *data);
-void				clean_up(t_data *data);
 
 #endif

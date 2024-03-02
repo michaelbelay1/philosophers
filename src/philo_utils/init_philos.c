@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 23:15:10 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/02 13:05:47 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/02 20:02:32 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ unsigned long int	get_time(void)
 	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }
 
-void	ft_sleep(unsigned long int time, t_philo *philo)
+int	ft_sleep(unsigned long int time, t_philo *philo)
 {
 	unsigned long	start;
 
@@ -29,12 +29,15 @@ void	ft_sleep(unsigned long int time, t_philo *philo)
 	while ((get_time() - start) < time)
 	{
 		pthread_mutex_unlock(&philo->data->mutex_dead);
-		if (philo->data->philo_dead)
-			return ;
-		usleep(200);
+		if (isdead(philo->data))
+		{
+			return (0);
+		}
+		usleep(100);
 		pthread_mutex_lock(&philo->data->mutex_dead);
 	}
 	pthread_mutex_unlock(&philo->data->mutex_dead);
+	return (1);
 }
 
 int	init_philos(t_data *data)
@@ -79,7 +82,7 @@ int	mutex(t_data *data)
 	if (!data->forks_taken)
 		return (1);
 	while (++j < data->num_of_philo)
-		data->forks_taken[j] = 1;
+		data->forks_taken[j] = -1;
 	pthread_mutex_init(&data->mutex_dead, NULL);
 	pthread_mutex_init(&data->mutex_meals, NULL);
 	pthread_mutex_init(&data->mutex_print, NULL);
