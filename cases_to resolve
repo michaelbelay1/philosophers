@@ -3,3 +3,5 @@
 
 solved
 2 0 0 0 1 (handle all the zero)
+
+./philo 5 800 200 200 1 leaks

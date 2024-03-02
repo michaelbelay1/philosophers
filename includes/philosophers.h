@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 21:07:40 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/02 20:04:28 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/02 20:09:05 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ int					ft_sleep(unsigned long int time, t_philo *philo);
 int					check_last_meal(t_philo *philo);
 void				one_philo_case(t_philo *philo);
 int					check_if_one_is_dead(t_data *data);
+int					isdead(t_data *data);
 
 #endif

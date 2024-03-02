@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 14:34:27 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/02 20:01:23 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/02 20:12:41 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	*philo_routine(void *arguments)
 			make_philo_think(philo);
 		while (!isdead(philo->data))
 		{
+			usleep(30);
 			if (!take_fork_eat(philo))
 				break ;
 			is_max_eat(philo);
