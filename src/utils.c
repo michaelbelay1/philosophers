@@ -6,11 +6,31 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 10:01:45 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/03 10:17:21 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/03 11:09:38 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
+
+void	close_up(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->num_of_philo)
+	{
+		if (pthread_mutex_lock(&data->forks[i]) == 0)
+			pthread_mutex_unlock(&data->forks[i]);
+		else
+			pthread_mutex_unlock(&data->forks[i]);
+	}
+	i = -1;
+	while (++i < data->num_of_philo)
+		pthread_mutex_destroy(&data->forks[i]);
+	free(data->forks_taken);
+	free(data->forks);
+	free(data->philo);
+}
 
 static int	handle_sign(const char *str, int *i)
 {
