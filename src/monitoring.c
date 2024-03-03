@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_monitoring.c                                 :+:      :+:    :+:   */
+/*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 22:35:14 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/02 22:28:10 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/03 10:08:28 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philosophers.h"
+#include "../includes/philosophers.h"
 
 int	check_last_meal(t_philo *philo)
 {
@@ -28,7 +28,7 @@ int	check_last_meal(t_philo *philo)
 	}
 }
 
-void	dropfoks(t_philo *philo)
+void	drop_forks(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
 	pthread_mutex_lock(philo->right_fork);
@@ -77,7 +77,7 @@ int	begin_monitoring(void *arg)
 	data = (t_data *)arg;
 	while (1)
 	{
-		if (isdead(data))
+		if (is_philo_dead(data))
 			return (0);
 		dead_philo = check_if_one_is_dead(data);
 		if (dead_philo)

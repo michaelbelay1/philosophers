@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_routine.c                                    :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 14:34:27 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/02 22:28:19 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/03 10:08:34 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philosophers.h"
+#include "../includes/philosophers.h"
 
-int	isdead(t_data *data)
+int	is_philo_dead(t_data *data)
 {
 	int	res;
 
@@ -39,7 +39,7 @@ void	one_philo_case(t_philo *philo)
 
 void	print_message(char *str, t_philo *philo)
 {
-	if (!isdead(philo->data))
+	if (!is_philo_dead(philo->data))
 	{
 		pthread_mutex_lock(&philo->data->mutex_dead);
 		pthread_mutex_lock(&philo->data->mutex_print);
@@ -52,12 +52,12 @@ void	print_message(char *str, t_philo *philo)
 
 int	take_fork_eat(t_philo *philo)
 {
-	if (isdead(philo->data))
+	if (is_philo_dead(philo->data))
 		return (0);
 	while (philo_takes_forks(philo) == 1)
 	{
 		usleep(100);
-		if (isdead(philo->data))
+		if (is_philo_dead(philo->data))
 			return (0);
 	}
 	if (!philo_is_eating(philo))
@@ -76,7 +76,7 @@ void	*philo_routine(void *arguments)
 	{
 		if (philo->id % 2 == 0)
 			usleep(1000);
-		while (!isdead(philo->data))
+		while (!is_philo_dead(philo->data))
 		{
 			usleep(50);
 			if (!take_fork_eat(philo))

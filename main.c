@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 21:12:09 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/02 22:25:45 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/03 10:30:25 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	join_threads(t_data *data)
 		if (pthread_join(data->philo[j].thread_id, 0) != 0)
 		{
 			printf("Error: pthread_join error\n");
-			exit(EXIT_FAILURE);
+			return ;
 		}
 	}
 }
@@ -79,12 +79,10 @@ int	main(int ac, char **av)
 		join_threads(&data);
 		if (philo_dead_id)
 		{
-			pthread_mutex_lock(&data.mutex_dead);
 			pthread_mutex_lock(&data.mutex_print);
 			printf("\033[0;31m%lu %d died \033[0m\n", get_time()
 				- data.philo->data->start_time, philo_dead_id);
 			pthread_mutex_unlock(&data.mutex_print);
-			pthread_mutex_unlock(&data.mutex_dead);
 		}
 	}
 	close_up(&data);

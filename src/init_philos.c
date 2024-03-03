@@ -6,11 +6,11 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 23:15:10 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/02 20:02:32 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/03 10:08:25 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philosophers.h"
+#include "../includes/philosophers.h"
 
 unsigned long int	get_time(void)
 {
@@ -29,10 +29,8 @@ int	ft_sleep(unsigned long int time, t_philo *philo)
 	while ((get_time() - start) < time)
 	{
 		pthread_mutex_unlock(&philo->data->mutex_dead);
-		if (isdead(philo->data))
-		{
+		if (is_philo_dead(philo->data))
 			return (0);
-		}
 		usleep(100);
 		pthread_mutex_lock(&philo->data->mutex_dead);
 	}
@@ -66,7 +64,7 @@ int	init_philos(t_data *data)
 	return (0);
 }
 
-int	mutex(t_data *data)
+int	forks_mutex(t_data *data)
 {
 	int	i;
 	int	j;
@@ -108,7 +106,7 @@ int	init_struct(t_data *data, char **av)
 	data->philo_dead = 0;
 	data->start_time = 0;
 	data->num_of_meals = 0;
-	if (mutex(data) || init_philos(data))
+	if (forks_mutex(data) || init_philos(data))
 		return (1);
 	return (0);
 }

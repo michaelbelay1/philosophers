@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi_l.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/23 19:48:49 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/08 23:05:15 by mhaile           ###   ########.fr       */
+/*   Created: 2024/03/03 10:01:45 by mhaile            #+#    #+#             */
+/*   Updated: 2024/03/03 10:17:21 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philosophers.h"
+#include "../includes/philosophers.h"
 
 static int	handle_sign(const char *str, int *i)
 {
@@ -53,10 +53,24 @@ long long int	ft_atoi_l(const char *str)
 	return ((int) sign * res);
 }
 
-// int main()
-// {
-//     char *num = "-9223372036854775804";
-//     printf("%lld\n", ft_atoi(num));
-// 		// printf("%d\n", atoi(num));
-//     return (0);
-// }
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i])
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+}

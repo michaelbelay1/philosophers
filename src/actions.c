@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_actions.c                                    :+:      :+:    :+:   */
+/*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:27:02 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/02 22:26:40 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/03 10:08:20 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philosophers.h"
+#include "../includes/philosophers.h"
 
 int	pick_up_forks(t_philo *philo)
 {
@@ -59,21 +59,21 @@ int	philo_is_eating(t_philo *philo)
 	philo->last_eat = get_time() - philo->data->start_time;
 	philo->time_to_die = philo->last_eat + philo->data->time_to_die;
 	pthread_mutex_unlock(&philo->data->mutex_dead);
-	if (isdead(philo->data))
-		return (dropfoks(philo), 0);
+	if (is_philo_dead(philo->data))
+		return (drop_forks(philo), 0);
 	if (!ft_sleep(philo->data->time_to_eat, philo))
-		return (dropfoks(philo), 0);
+		return (drop_forks(philo), 0);
 	pthread_mutex_lock(&philo->data->mutex_meals);
 	if (philo->data->num_of_meals != -1)
 		philo->data->num_of_meals++;
 	pthread_mutex_unlock(&philo->data->mutex_meals);
-	dropfoks(philo);
+	drop_forks(philo);
 	return (1);
 }
 
 int	philo_is_sleeping(t_philo *philo)
 {
-	if (!isdead(philo->data))
+	if (!is_philo_dead(philo->data))
 	{
 		print_message("\033[1;95mis sleeping\033[0m", philo);
 		if (!ft_sleep(philo->data->time_to_sleep, philo))
@@ -86,7 +86,7 @@ int	philo_is_sleeping(t_philo *philo)
 
 int	philo_is_thinking(t_philo *philo)
 {
-	if (!isdead(philo->data))
+	if (!is_philo_dead(philo->data))
 	{
 		print_message("\033[1;97mis thinking\033[0m", philo);
 		usleep(50);

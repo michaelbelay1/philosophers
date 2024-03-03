@@ -6,11 +6,11 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:26:31 by mhaile            #+#    #+#             */
-/*   Updated: 2024/02/27 22:51:47 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/03 10:07:02 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philosophers.h"
+#include "../includes/philosophers.h"
 
 int	is_numeric(int count)
 {
