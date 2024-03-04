@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 14:34:27 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/03 10:08:34 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/04 15:46:10 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	take_fork_eat(t_philo *philo)
 		return (0);
 	while (philo_takes_forks(philo) == 1)
 	{
-		usleep(100);
+		usleep(500);
 		if (is_philo_dead(philo->data))
 			return (0);
 	}
@@ -75,10 +75,12 @@ void	*philo_routine(void *arguments)
 	else
 	{
 		if (philo->id % 2 == 0)
-			usleep(1000);
+		{
+			print_message("\033[1;97mis thinking\033[0m", philo);
+			usleep(800);
+		}
 		while (!is_philo_dead(philo->data))
 		{
-			usleep(50);
 			if (!take_fork_eat(philo))
 				break ;
 			is_max_eat(philo);

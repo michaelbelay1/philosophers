@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 22:35:14 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/03 10:08:28 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/04 15:45:45 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,5 @@ int	begin_monitoring(void *arg)
 		dead_philo = check_if_one_is_dead(data);
 		if (dead_philo)
 			return (dead_philo);
-		usleep(200);
 	}
 }
