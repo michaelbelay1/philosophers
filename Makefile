@@ -6,7 +6,7 @@
 #    By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/08 21:09:49 by mhaile            #+#    #+#              #
-#    Updated: 2024/03/04 15:53:43 by mhaile           ###   ########.fr        #
+#    Updated: 2024/03/04 18:53:21 by mhaile           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ OBJS 	=		$(SRCS:.c=.o)
 
 CC 		= 		cc 
 
-CFLAGS	=		-Wall -Wextra -Werror -g3 
+CFLAGS	=		-Wall -Wextra -Werror -g3 -pthread
 
 RM		=		rm -rf
 

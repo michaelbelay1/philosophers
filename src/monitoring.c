@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 22:35:14 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/04 15:45:45 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/04 20:48:58 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ int	check_last_meal(t_philo *philo)
 void	drop_forks(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
-	pthread_mutex_lock(philo->right_fork);
 	philo->data->forks_taken[philo->id - 1] = philo->id;
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_lock(philo->right_fork);
 	if (philo->id == philo->num_of_philo)
 		philo->data->forks_taken[0] = philo->id;
 	else
 		philo->data->forks_taken[philo->id] = philo->id;
 	pthread_mutex_unlock(philo->right_fork);
-	pthread_mutex_unlock(philo->left_fork);
 }
 
 void	is_max_eat(t_philo *philo)

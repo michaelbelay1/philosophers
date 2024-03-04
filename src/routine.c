@@ -6,11 +6,23 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 14:34:27 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/04 15:46:10 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/04 20:59:40 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
+
+// void	print_philos(t_data *data)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (i < data->num_of_philo)
+// 	{
+// 		printf("philo %d\n", data->philo[i].id);
+// 		i++;
+// 	}
+// }
 
 int	is_philo_dead(t_data *data)
 {
@@ -56,7 +68,7 @@ int	take_fork_eat(t_philo *philo)
 		return (0);
 	while (philo_takes_forks(philo) == 1)
 	{
-		usleep(500);
+		usleep(100);
 		if (is_philo_dead(philo->data))
 			return (0);
 	}

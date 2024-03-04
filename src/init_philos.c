@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 23:15:10 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/04 15:05:05 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/04 21:03:05 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_sleep(unsigned long int time, t_philo *philo)
 		pthread_mutex_unlock(&philo->data->mutex_dead);
 		if (is_philo_dead(philo->data))
 			return (0);
-		usleep(200);
+		usleep(100);
 		pthread_mutex_lock(&philo->data->mutex_dead);
 	}
 	pthread_mutex_unlock(&philo->data->mutex_dead);

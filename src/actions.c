@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:27:02 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/04 15:45:21 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/04 21:04:26 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,21 @@
 
 int	pick_up_forks(t_philo *philo)
 {
-	if (philo->data->forks_taken[philo->id - 1]
-		&& philo->data->forks_taken[philo->id - 1] != philo->id
-		&& (philo->id != philo->num_of_philo
-			&& philo->data->forks_taken[philo->id]
-			&& (philo->data->forks_taken[philo->id] != philo->id)))
+	if (((philo->data->forks_taken[philo->id - 1])
+			&& philo->data->forks_taken[philo->id - 1] != philo->id
+			&& (philo->id != philo->num_of_philo
+				&& philo->data->forks_taken[philo->id]
+				&& philo->data->forks_taken[philo->id] != philo->id))
+		|| ((philo->data->forks_taken[philo->id - 1]
+				&& philo->data->forks_taken[philo->id - 1] != philo->id)
+			&& (philo->id == philo->num_of_philo && (philo->data->forks_taken[0]
+					&& philo->data->forks_taken[0] != philo->id))))
 	{
 		philo->data->forks_taken[philo->id - 1] = 0;
-		philo->data->forks_taken[philo->id] = 0;
-	}
-	else if (philo->data->forks_taken[philo->id - 1]
-		&& philo->data->forks_taken[philo->id - 1] != philo->id
-		&& (philo->id == philo->num_of_philo && (philo->data->forks_taken[0]
-				&& philo->data->forks_taken[0] != philo->id)))
-	{
-		philo->data->forks_taken[philo->id - 1] = 0;
-		philo->data->forks_taken[philo->id] = 0;
+		if (philo->num_of_philo == philo->id)
+			philo->data->forks_taken[0] = 0;
+		else
+			philo->data->forks_taken[philo->id] = 0;
 	}
 	else
 	{
