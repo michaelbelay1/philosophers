@@ -56,7 +56,7 @@ int	take_fork_eat(t_philo *philo)
 		return (0);
 	while (philo_takes_forks(philo) == 1)
 	{
-		usleep(500);
+		usleep(100);
 		if (is_philo_dead(philo->data))
 			return (0);
 	}
