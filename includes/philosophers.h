@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 21:07:40 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/03 10:17:27 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/05 14:03:56 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,12 @@ typedef struct s_philo
 	int						id;
 	pthread_mutex_t			*left_fork;
 	pthread_mutex_t			*right_fork;
-	long					last_eat;
+	int						*r_fork;
+	int						*l_fork;
 	int						num_of_philo;
 	unsigned long int		time_to_die;
 	unsigned long int		time_to_eat;
 	unsigned long int		time_to_sleep;
-	int						*forks_taken_left;
-	int						*forks_taken_right;
 	pthread_t				thread_id;
 	struct s_data			*data;
 }				t_philo;

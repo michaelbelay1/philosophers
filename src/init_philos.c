@@ -6,7 +6,7 @@
 /*   By: mhaile <mhaile@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 23:15:10 by mhaile            #+#    #+#             */
-/*   Updated: 2024/03/04 21:03:05 by mhaile           ###   ########.fr       */
+/*   Updated: 2024/03/05 14:03:42 by mhaile           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,21 @@ int	init_philos(t_data *data)
 	int	i;
 
 	i = -1;
-	data->philo = malloc(sizeof(t_philo) * data->num_of_philo);
-	if (!data->philo)
-		return (1);
 	while (++i < data->num_of_philo)
 	{
 		data->philo[i].id = i + 1;
+		data->philo[i].l_fork = &data->forks_taken[i];
 		data->philo[i].left_fork = &data->forks[i];
 		if (data->philo[i].id == data->num_of_philo)
+		{
+			data->philo[i].r_fork = &data->forks_taken[0];
 			data->philo[i].right_fork = &data->forks[0];
+		}
 		else
+		{
+			data->philo[i].r_fork = &data->forks_taken[i + 1];
 			data->philo[i].right_fork = &data->forks[i + 1];
-		data->philo[i].last_eat = 0;
+		}
 		data->philo[i].time_to_die = data->time_to_die;
 		data->philo[i].time_to_eat = data->time_to_eat;
 		data->philo[i].time_to_sleep = data->time_to_sleep;
@@ -74,11 +77,14 @@ int	forks_mutex(t_data *data)
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_of_philo);
 	if (!data->forks)
 		return (1);
-	while (++i < data->num_of_philo)
-		pthread_mutex_init(&data->forks[i], NULL);
 	data->forks_taken = malloc(sizeof(int) * data->num_of_philo);
 	if (!data->forks_taken)
 		return (1);
+	data->philo = malloc(sizeof(t_philo) * data->num_of_philo);
+	if (!data->philo)
+		return (1);
+	while (++i < data->num_of_philo)
+		pthread_mutex_init(&data->forks[i], NULL);
 	while (++j < data->num_of_philo)
 		data->forks_taken[j] = -1;
 	pthread_mutex_init(&data->mutex_dead, NULL);
